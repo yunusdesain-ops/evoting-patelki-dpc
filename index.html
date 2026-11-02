@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>E-Voting DPC PATELKI</title>
+<style>
+:root{--n:#102a43;--b:#1769aa;--bg:#f4f7fb;--card:#fff;--t:#172b4d;--m:#718096;--l:#e5eaf0;--g:#159a75;--r:#d64545;--sh:0 10px 30px rgba(16,42,67,.08)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--t);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button{border:0;cursor:pointer}.top{background:linear-gradient(135deg,#102a43,#1769aa);color:#fff;padding:25px 18px 36px}.topin{max-width:1080px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}.brand small{opacity:.75}.brand h1{margin:3px 0;font-size:24px}.brand p{margin:0;opacity:.8}.status{background:#ffffff18;padding:10px 14px;border-radius:12px;font-size:12px}.wrap{max-width:1080px;margin:-20px auto 35px;padding:0 15px}.card{background:#fff;border:1px solid var(--l);border-radius:18px;padding:19px;box-shadow:var(--sh)}.login{max-width:430px;margin:70px auto}.logo{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,#102a43,#1769aa);display:grid;place-items:center;color:#fff;font-size:25px;font-weight:900;margin:auto auto 18px}.login h2{text-align:center;margin:0}.login p{text-align:center;color:var(--m)}label{display:block;font-size:13px;font-weight:700;margin:16px 0 7px}input{width:100%;border:1px solid var(--l);padding:13px 14px;border-radius:11px;outline:0;background:#fff}.input:focus,input:focus{border-color:#74acd3}.primary{width:100%;padding:13px 16px;border-radius:11px;background:var(--b);color:#fff;font-weight:800;margin-top:17px}.secondary{padding:11px 14px;border-radius:10px;background:#edf2f7;color:var(--t);font-weight:700}.danger{padding:11px 14px;border-radius:10px;background:#fff0ef;color:#b83232;font-weight:700}.hidden{display:none!important}.nav{display:flex;gap:7px;background:#fff;padding:8px;border-radius:15px;box-shadow:var(--sh);margin-bottom:18px;overflow:auto}.nav button{padding:11px 15px;background:#fff;color:var(--m);border-radius:10px;white-space:nowrap}.nav button.active{background:#eaf3fb;color:var(--b);font-weight:800}.view{display:none}.view.active{display:block}.title{display:flex;justify-content:space-between;align-items:center;margin:18px 0 12px}.title h2{margin:0;font-size:18px}.muted{font-size:13px;color:var(--m)}.notice{padding:14px;border-radius:13px;background:#eef7f4;color:#12644f;margin-bottom:16px}.candidate-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.candidate{position:relative}.photo{height:190px;border-radius:14px;background:linear-gradient(135deg,#dceaf6,#f5f8fb);display:grid;place-items:center;color:var(--b);font-size:48px;font-weight:900;margin-bottom:15px}.num{position:absolute;top:29px;left:29px;background:#fff;color:var(--b);padding:7px 10px;border-radius:10px;font-weight:900;box-shadow:0 4px 12px #0001}.candidate h3{margin:0 0 5px}.candidate p{margin:0;color:var(--m);font-size:13px}.choose{width:100%;margin-top:15px;padding:13px;border-radius:11px;background:var(--b);color:#fff;font-weight:800}.done{text-align:center;padding:40px 15px}.done .check{width:70px;height:70px;border-radius:50%;background:#e7f7f1;color:var(--g);display:grid;place-items:center;font-size:32px;margin:0 auto 15px;font-weight:900}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat{padding:16px}.stat small{color:var(--m)}.stat strong{display:block;font-size:28px;margin-top:7px}.bar{height:11px;background:#edf1f5;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,#1769aa,#39a8e8);border-radius:20px}.result{margin:17px 0}.rh{display:flex;justify-content:space-between;font-size:14px;font-weight:800;margin-bottom:7px}.tablewrap{overflow:auto}.table{width:100%;border-collapse:collapse;min-width:600px}.table th,.table td{padding:12px;border-bottom:1px solid var(--l);font-size:13px;text-align:left}.pill{font-size:11px;font-weight:800;border-radius:20px;padding:5px 9px}.ok{background:#e8f7f2;color:#13795b}.no{background:#fff3e6;color:#a65a00}.tools{display:flex;gap:8px;flex-wrap:wrap}.modalbg{position:fixed;inset:0;background:#102a4366;display:none;align-items:center;justify-content:center;padding:18px;z-index:9}.modalbg.show{display:flex}.modal{background:#fff;width:100%;max-width:430px;border-radius:20px;padding:22px}.modal h2{margin-top:0}.ma{display:flex;gap:9px;margin-top:18px}.ma button{flex:1}.toast{position:fixed;right:18px;bottom:18px;background:#102a43;color:#fff;padding:13px 16px;border-radius:12px;display:none;z-index:20}.foot{text-align:center;color:var(--m);font-size:12px;padding:18px}.lock{color:var(--m);font-size:12px;margin-top:14px;text-align:center}
+@media(max-width:760px){.candidate-grid{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}.topin{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.candidate-grid{grid-template-columns:1fr}.photo{height:200px}.wrap{padding:0 10px}}
+
+/* PREMIUM UI */
+body{background:radial-gradient(circle at 15% 0%,#eaf5ff 0,#f6f9fc 34%,#f4f7fb 100%);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 0 42%,rgba(23,105,170,.025) 50%,transparent 58%);z-index:-1}
+.top{position:relative;overflow:hidden;background:linear-gradient(135deg,#071b2f 0%,#0d3558 48%,#1769aa 100%);padding:28px 18px 68px}
+.top:after{content:"";position:absolute;width:420px;height:420px;border:1px solid #ffffff18;border-radius:50%;right:-150px;top:-230px;box-shadow:0 0 0 50px #ffffff08,0 0 0 100px #ffffff04}
+.topin{position:relative;z-index:1}
+.brand small{letter-spacing:3px;font-weight:800;color:#8fd0ff}
+.brand h1{font-size:29px;letter-spacing:-.7px}
+.brand p{font-size:14px}
+.status{backdrop-filter:blur(12px);border:1px solid #ffffff20;background:#ffffff12}
+.wrap{margin:-34px auto 45px}
+.card{box-shadow:0 18px 45px rgba(16,42,67,.075);border-color:#e8eef5}
+.nav{border:1px solid #e7edf4;backdrop-filter:blur(15px)}
+.candidate-grid{gap:20px}
+.candidate{transition:transform .2s,box-shadow .2s,border-color .2s;border:1px solid #e4ebf2}
+.candidate:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(16,42,67,.12);border-color:#b9d8ef}
+.photo{height:225px;background:linear-gradient(145deg,#eaf5ff,#d7e9f7 55%,#f7fbff);position:relative;overflow:hidden}
+.photo:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;border:1px solid #1769aa20;box-shadow:0 0 0 24px #1769aa08,0 0 0 48px #1769aa05}
+.photo{font-size:52px}
+.num{top:18px;left:18px;z-index:2;background:#fff;border:1px solid #e6eef5}
+.candidate h3{font-size:18px}
+.candidate p{min-height:38px}
+.choose{background:linear-gradient(135deg,#1769aa,#0e80c9);box-shadow:0 7px 18px #1769aa25;transition:.2s}
+.choose:hover{transform:translateY(-1px);box-shadow:0 10px 22px #1769aa35}
+.notice{border:1px solid #dcefe9;background:linear-gradient(135deg,#f0faf7,#e9f7f2);font-weight:600}
+.done .check{box-shadow:0 0 0 10px #e7f7f155}
+.login{box-shadow:0 25px 70px rgba(16,42,67,.12);border:1px solid #e4ebf2}
+.login .logo{box-shadow:0 12px 30px #1769aa35}
+.primary{background:linear-gradient(135deg,#1769aa,#0e80c9);box-shadow:0 8px 20px #1769aa25}
+.stat{position:relative;overflow:hidden}
+.stat:after{content:"";position:absolute;width:80px;height:80px;border-radius:50%;right:-35px;top:-35px;background:#1769aa08}
+.stats .stat strong{letter-spacing:-1px}
+@media(max-width:520px){.top{padding-bottom:58px}.brand h1{font-size:24px}.photo{height:210px}}
+
+/* Candidate photo management */
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px;z-index:1}
+.candidate-photo-thumb{width:54px;height:54px;object-fit:cover;border-radius:10px;background:#eaf5ff;display:block}
+.candidate-form{max-width:520px;max-height:90vh;overflow:auto}
+.photo-upload{display:flex;gap:14px;align-items:center;padding:13px;border:1px dashed #b9cddd;background:#f7fbff;border-radius:14px}
+.photo-preview{width:92px;height:108px;border-radius:12px;background:#e5f0f8;display:grid;place-items:center;color:#1769aa;font-weight:900;overflow:hidden;flex:0 0 auto}
+.photo-preview img{width:100%;height:100%;object-fit:cover}
+.file-pick{display:inline-flex;align-items:center;justify-content:center;background:#eaf3fb;color:#1769aa;padding:10px 13px;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer}
+.file-pick input{display:none}
+</style>
+</head>
+<body>
+
+<!-- LOGIN PEMILIH -->
+<section id="loginVoter" class="login card">
+ <div class="logo">P</div><h2>E-Voting DPC PATELKI</h2>
+ <p>Pemilihan Ketua DPC • Periode Baru</p>
+ <label>ID Pemilih</label><input id="voterId" placeholder="Masukkan kode P001 sampai P999" autocomplete="off">
+ <button class="primary" onclick="voterLogin()">MASUK KE PEMILIHAN</button>
+ <div class="lock">Mode pemilih uji real-time. Perangkat harus lebih dahulu menghubungkan akun Firebase Admin.</div>
+ <button class="secondary" style="width:100%;margin-top:14px" onclick="showLogin('admin')">LOGIN ADMIN</button>
+</section>
+
+<!-- LOGIN ADMIN -->
+<section id="loginAdmin" class="login card hidden">
+ <div class="logo">A</div><h2>ADMIN PEMILU</h2>
+ <p>Akses khusus panitia/admin</p>
+ <label>Email Admin (Firebase Authentication)</label><input id="adminUser" type="email" placeholder="Email akun admin" autocomplete="username">
+ <label>Password Firebase</label><input id="adminPass" type="password" placeholder="Password akun admin" autocomplete="current-password">
+ <button class="primary" onclick="adminLogin()">MASUK ADMIN</button>
+ <button class="secondary" style="width:100%;margin-top:9px" onclick="showLogin('voter')">Kembali ke Pemilih</button>
+ <div class="lock">Gunakan email dan password akun Firebase Admin yang sudah dibuat di Authentication. Koneksi internet diperlukan untuk sinkronisasi.</div>
+</section>
+
+<!-- PEMILIH -->
+<div id="voterApp" class="hidden">
+<header class="top"><div class="topin"><div class="brand"><small>PATELKI</small><h1>PEMILIHAN KETUA DPC</h1><p>PATELKI • Periode Kepengurusan Baru</p></div><div class="status" id="voterBadge"></div></div></header>
+<main class="wrap">
+ <section id="voterPage" class="card">
+  <div id="voterNotice" class="notice">Gunakan hak suara Anda dengan memilih <b>1 kandidat</b>. Setelah dikonfirmasi, pilihan tidak dapat diubah.</div>
+  <div class="title"><h2>Daftar Kandidat</h2><span class="muted">Pilih 1 kandidat</span></div>
+  <div id="candidateGrid" class="candidate-grid"></div>
+ </section>
+ <section id="voterDone" class="card done hidden">
+  <div class="check">✓</div><h2>Suara Berhasil Direkam</h2><p class="muted">Terima kasih. Hak suara Anda telah digunakan.</p>
+  <button class="secondary" onclick="voterLogout()">KELUAR</button>
+ </section>
+</main><div class="foot">E-Voting DPC PATELKI</div>
+</div>
+
+<!-- ADMIN -->
+<div id="adminApp" class="hidden">
+<header class="top"><div class="topin"><div class="brand"><small>PATELKI • PANITIA</small><h1>ADMIN PEMILU</h1><p>Kontrol dan monitoring pemilihan</p></div><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><div class="status" id="cloudBadge">MENGHUBUNGKAN FIREBASE...</div><button class="secondary" onclick="enterVoterTestMode()">MODE PEMILIH (UJI)</button></div></div></header>
+<main class="wrap">
+<nav class="nav">
+ <button class="active" data-admin="dash">Dashboard</button><button data-admin="voters">Pemilih</button><button data-admin="candidates">Kandidat</button><button data-admin="settings">Kontrol</button><button onclick="adminLogout()">Keluar</button>
+</nav>
+<section id="dash" class="adminview">
+ <div class="stats">
+  <div class="card stat"><small>Total Pemilih</small><strong id="aTotal">0</strong></div>
+  <div class="card stat"><small>Sudah Memilih</small><strong id="aVoted">0</strong></div>
+  <div class="card stat"><small>Belum Memilih</small><strong id="aRemain">0</strong></div>
+  <div class="card stat"><small>Partisipasi</small><strong id="aRate">0%</strong></div>
+ </div>
+ <div class="title"><h2>Perolehan Suara</h2><span class="muted">Hanya dapat dilihat admin</span></div>
+ <div class="card" id="adminResults"></div>
+</section>
+<section id="voters" class="adminview hidden">
+ <div class="title"><h2>Daftar Pemilih</h2><div class="tools"><button class="secondary" onclick="seedDemo()">Isi Demo</button><button class="secondary" onclick="addVoter()">Tambah Pemilih</button></div></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>ID</th><th>Nama</th><th>Status</th></tr></thead><tbody id="voterTable"></tbody></table></div>
+</section>
+<section id="candidates" class="adminview hidden">
+ <div class="title"><h2>Kandidat</h2><button class="secondary" onclick="openCandidateModal()">+ Tambah Kandidat</button></div>
+ <div class="card tablewrap"><table class="table"><thead><tr><th>Foto</th><th>No</th><th>Nama</th><th>Peran</th><th>Aksi</th></tr></thead><tbody id="candidateTable"></tbody></table></div>
+</section>
+<section id="settings" class="adminview hidden">
+ <div class="card">
+  <div class="title" style="margin-top:0"><h2>Kontrol Pemilihan</h2><span id="electionStatus" class="pill ok"></span></div>
+  <p class="muted">Admin dapat membuka atau menutup pemungutan suara. Saat ditutup, pemilih tidak dapat mengirim suara baru.</p>
+  <div class="tools"><button class="secondary" onclick="toggleElection()">Ubah Status</button><button class="secondary" onclick="exportData()">Export Data</button><button class="danger" onclick="resetData()">Reset Prototype</button></div>
+ </div>
+</section>
+</main><div class="foot">Panel Admin • E-Voting DPC PATELKI • Sinkronisasi Firebase Realtime Database</div>
+</div>
+
+
+<div id="candidateModal" class="modalbg"><div class="modal candidate-form">
+ <h2 id="candidateModalTitle">Tambah Kandidat</h2>
+ <label>Nama Kandidat</label><input id="candidateName" placeholder="Nama lengkap kandidat" maxlength="100">
+ <label>Jabatan / Keterangan</label><input id="candidateRole" value="Calon Ketua DPC" maxlength="100">
+ <label>Foto Kandidat</label>
+ <div class="photo-upload">
+  <div class="photo-preview" id="candidatePhotoPreview">FOTO</div>
+  <div style="flex:1;min-width:0">
+   <label class="file-pick">UPLOAD FOTO<input id="candidatePhotoFile" type="file" accept="image/*" onchange="handleCandidatePhoto(event)"></label>
+   <p class="muted" style="margin:9px 0 0">JPG, PNG, atau WebP. Foto diperkecil otomatis lalu disimpan di Firebase agar tampil di semua laptop.</p>
+   <button type="button" class="secondary" style="margin-top:8px" onclick="clearCandidatePhoto()">Hapus Foto</button>
+  </div>
+ </div>
+ <div class="ma"><button class="secondary" onclick="closeCandidateModal()">Batal</button><button class="primary" style="margin:0" onclick="saveCandidate()">SIMPAN KANDIDAT</button></div>
+</div></div>
+
+<div id="modal" class="modalbg"><div class="modal"><h2>Konfirmasi Pilihan</h2><p id="confirm"></p><div class="ma"><button class="secondary" onclick="closeModal()">Batal</button><button class="primary" style="margin:0" onclick="submitVote()">KONFIRMASI SUARA</button></div></div></div>
+<div id="toast" class="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+import { getDatabase, ref, onValue, set, runTransaction } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCxZDEa0vEo-jBBddyApgqeeSLpKZmrT84",
+  authDomain: "evoting-patelki-dpc.firebaseapp.com",
+  databaseURL: "https://evoting-patelki-dpc-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "evoting-patelki-dpc",
+  storageBucket: "evoting-patelki-dpc.firebasestorage.app",
+  messagingSenderId: "100963529497",
+  appId: "1:100963529497:web:8e48e641f88342a9a10b88",
+  measurementId: "G-RE7KY6T8GG"
+};
+
+const ADMIN_UID = "8160nFZqX8S37A7D3YxUZHzsf643";
+const DATA_PATH = "electionData";
+const KEY = "patelki_evoting_v2";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+const dataRef = ref(db, DATA_PATH);
+
+const base = {
+  status: "BERLANGSUNG",
+  candidates: [
+    {id:"01", name:"Kandidat 01", role:"Calon Ketua DPC"},
+    {id:"02", name:"Kandidat 02", role:"Calon Ketua DPC"},
+    {id:"03", name:"Kandidat 03", role:"Calon Ketua DPC"}
+  ],
+  voters: [],
+  votes: {}
+};
+
+function toArray(value) {
+  if (Array.isArray(value)) return value.filter(Boolean);
+  if (value && typeof value === "object") {
+    return Object.keys(value).sort((a,b) => Number(a)-Number(b)).map(k => value[k]).filter(Boolean);
+  }
+  return [];
+}
+function ensureVoters(data) {
+  if (!Array.isArray(data.voters)) data.voters = toArray(data.voters);
+  for (let i=1; i<=999; i++) {
+    const id = "P" + String(i).padStart(3,"0");
+    if (!data.voters.some(v => v && v.id === id)) {
+      data.voters.push({id, name:"Pemilih " + String(i).padStart(3,"0"), voted:false});
+    }
+  }
+  if (!Array.isArray(data.candidates)) data.candidates = toArray(data.candidates);
+  if (!data.votes || typeof data.votes !== "object") data.votes = {};
+  if (!data.status) data.status = "BERLANGSUNG";
+  return data;
+}
+function freshData() {
+  return ensureVoters(JSON.parse(JSON.stringify(base)));
+}
+function normalizeData(raw) {
+  const data = raw && typeof raw === "object" ? raw : freshData();
+  data.candidates = toArray(data.candidates);
+  data.voters = toArray(data.voters);
+  data.votes = data.votes && typeof data.votes === "object" ? data.votes : {};
+  data.status = data.status || "BERLANGSUNG";
+  return ensureVoters(data);
+}
+function readCachedData() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(KEY) || "null");
+    return stored ? normalizeData(stored) : freshData();
+  } catch {
+    return freshData();
+  }
+}
+let d = readCachedData();
+let user = null;
+let pending = null;
+let cloudReady = false;
+let cloudListener = null;
+let connectPromise = null;
+let writeQueue = Promise.resolve();
+let candidateEditId = null;
+let candidatePhotoDraft = "";
+
+function setCloudStatus(text, good=false) {
+  const el = document.getElementById("cloudBadge");
+  if (el) {
+    el.textContent = text;
+    el.style.background = good ? "#159a7540" : "#ffffff18";
+  }
+}
+function cacheData() {
+  try { localStorage.setItem(KEY, JSON.stringify(d)); }
+  catch { toast("Cache lokal penuh. Foto kandidat mungkin terlalu besar."); }
+}
+function updateFromCloud(raw) {
+  d = normalizeData(raw);
+  cacheData();
+  if (user) {
+    const latest = d.voters.find(v => v.id === user.id);
+    if (latest) user = latest;
+  }
+  renderAdmin();
+  if (!document.getElementById("voterApp").classList.contains("hidden") && user) renderVoter();
+}
+
+async function startRealtime() {
+  if (connectPromise) return connectPromise;
+  connectPromise = (async () => {
+    setCloudStatus("MENGHUBUNGKAN FIREBASE...");
+    // Isi data awal hanya bila database benar-benar masih kosong.
+    const initResult = await runTransaction(dataRef, current => current === null ? d : current, {applyLocally:false});
+    d = normalizeData(initResult.snapshot.val());
+    cacheData();
+    if (cloudListener) cloudListener();
+    cloudListener = onValue(dataRef, snapshot => {
+      if (snapshot.exists()) updateFromCloud(snapshot.val());
+      cloudReady = true;
+      setCloudStatus("FIREBASE • REAL-TIME AKTIF", true);
+    }, error => {
+      cloudReady = false;
+      setCloudStatus("KONEKSI GAGAL");
+      toast("Firebase: " + (error?.message || "Gagal membaca database"));
+    });
+    cloudReady = true;
+    setCloudStatus("FIREBASE • REAL-TIME AKTIF", true);
+    return true;
+  })().catch(error => {
+    connectPromise = null;
+    cloudReady = false;
+    setCloudStatus("BELUM TERHUBUNG");
+    throw error;
+  });
+  return connectPromise;
+}
+
+onAuthStateChanged(auth, async firebaseUser => {
+  if (firebaseUser && firebaseUser.uid === ADMIN_UID) {
+    try { await startRealtime(); }
+    catch (error) { toast("Gagal menghubungkan Firebase: " + (error?.message || error)); }
+  } else {
+    cloudReady = false;
+    if (cloudListener) { cloudListener(); cloudListener = null; }
+    connectPromise = null;
+    setCloudStatus("BELUM TERHUBUNG");
+  }
+});
+
+function save() {
+  cacheData();
+  renderAdmin();
+  if (!cloudReady || auth.currentUser?.uid !== ADMIN_UID) {
+    toast("Belum terhubung ke Firebase. Login Admin terlebih dahulu.");
+    return Promise.resolve(false);
+  }
+  const payload = JSON.parse(JSON.stringify(d));
+  const job = writeQueue.catch(() => {}).then(() => set(dataRef, payload));
+  writeQueue = job;
+  return job.then(() => {
+    setCloudStatus("TERSINKRON • REAL-TIME", true);
+    return true;
+  }).catch(error => {
+    setCloudStatus("GAGAL MENYIMPAN");
+    toast("Gagal menyimpan ke Firebase: " + (error?.message || error));
+    return false;
+  });
+}
+
+function showLogin(which) {
+  document.getElementById("loginVoter").classList.toggle("hidden", which !== "voter");
+  document.getElementById("loginAdmin").classList.toggle("hidden", which !== "admin");
+  document.getElementById("voterApp").classList.add("hidden");
+  document.getElementById("adminApp").classList.add("hidden");
+}
+function voterLogin() {
+  if (!cloudReady || auth.currentUser?.uid !== ADMIN_UID) {
+    return toast("Hubungkan Firebase dahulu melalui LOGIN ADMIN pada perangkat ini.");
+  }
+  const id = document.getElementById("voterId").value.trim().toUpperCase();
+  const v = d.voters.find(x => x.id === id);
+  if (!v) return toast("ID pemilih tidak terdaftar");
+  if (d.status !== "BERLANGSUNG") return toast("Pemungutan suara sedang ditutup");
+  user = v;
+  document.getElementById("loginVoter").classList.add("hidden");
+  document.getElementById("voterApp").classList.remove("hidden");
+  document.getElementById("voterBadge").textContent = v.name + " • " + v.id + " • REAL-TIME";
+  renderVoter();
+}
+function enterVoterTestMode() {
+  if (!cloudReady || auth.currentUser?.uid !== ADMIN_UID) return toast("Firebase belum terhubung.");
+  user = null;
+  document.getElementById("voterId").value = "";
+  showLogin("voter");
+  toast("Mode pemilih untuk UJI REAL-TIME aktif pada perangkat ini.");
+}
+function renderVoter() {
+  if (!user) return;
+  document.getElementById("voterPage").classList.toggle("hidden", !!user.voted);
+  document.getElementById("voterDone").classList.toggle("hidden", !user.voted);
+  const box = document.getElementById("candidateGrid");
+  box.innerHTML = "";
+  if (user.voted) return;
+  d.candidates.forEach(c => {
+    box.innerHTML += `<div class="card candidate"><div class="num">${esc(c.id)}</div><div class="photo">${c.photo ? `<img src="${esc(c.photo)}" alt="Foto ${esc(c.name)}">` : `<span>${esc(c.id)}</span>`}</div><h3>${esc(c.name)}</h3><p>${esc(c.role)}</p><button class="choose" onclick="confirmVote('${esc(c.id)}')">PILIH KANDIDAT</button></div>`;
+  });
+}
+function confirmVote(id) {
+  if (!cloudReady) return toast("Koneksi Firebase terputus.");
+  if (d.status !== "BERLANGSUNG") return toast("Pemungutan suara ditutup");
+  pending = id;
+  const candidate = d.candidates.find(x => x.id === id);
+  if (!candidate) return toast("Kandidat tidak ditemukan");
+  document.getElementById("confirm").innerHTML = "Anda memilih <b>" + esc(candidate.name) + "</b>.<br><br>Setelah dikonfirmasi, pilihan tidak dapat diubah.";
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal() {
+  pending = null;
+  document.getElementById("modal").classList.remove("show");
+}
+async function submitVote() {
+  if (!user || user.voted || !pending || !cloudReady) return;
+  const voterId = user.id;
+  const candidateId = pending;
+  try {
+    const result = await runTransaction(dataRef, current => {
+      if (!current) return;
+      const next = normalizeData(current);
+      const voter = next.voters.find(v => v.id === voterId);
+      const candidateExists = next.candidates.some(c => c.id === candidateId);
+      if (!voter || voter.voted || next.status !== "BERLANGSUNG" || !candidateExists) return;
+      voter.voted = true;
+      next.votes[candidateId] = Number(next.votes[candidateId] || 0) + 1;
+      return next;
+    }, {applyLocally:false});
+    if (!result.committed) {
+      if (result.snapshot.exists()) updateFromCloud(result.snapshot.val());
+      closeModal();
+      return toast("Suara tidak masuk. ID ini mungkin sudah digunakan atau pemilihan ditutup.");
+    }
+    updateFromCloud(result.snapshot.val());
+    closeModal();
+    renderVoter();
+    toast("Suara berhasil direkam dan disinkronkan.");
+  } catch (error) {
+    toast("Gagal mengirim suara: " + (error?.message || error));
+  }
+}
+function voterLogout() {
+  user = null;
+  showLogin("voter");
+  document.getElementById("voterId").value = "";
+}
+async function adminLogin() {
+  const email = document.getElementById("adminUser").value.trim();
+  const password = document.getElementById("adminPass").value;
+  if (!email || !password) return toast("Email dan password Firebase wajib diisi.");
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    if (credential.user.uid !== ADMIN_UID) {
+      await signOut(auth);
+      return toast("Akun ini bukan UID Admin yang diizinkan pada Rules.");
+    }
+    await startRealtime();
+    document.getElementById("loginAdmin").classList.add("hidden");
+    document.getElementById("loginVoter").classList.add("hidden");
+    document.getElementById("adminApp").classList.remove("hidden");
+    renderAdmin();
+    toast("Firebase tersambung. Data akan sinkron antar perangkat admin.");
+  } catch (error) {
+    toast("Login Firebase gagal: " + (error?.message || error));
+  }
+}
+async function adminLogout() {
+  user = null;
+  try { await signOut(auth); } catch {}
+  showLogin("voter");
+  document.getElementById("adminUser").value = "";
+  document.getElementById("adminPass").value = "";
+}
+function renderAdmin() {
+  const total = d.voters.length;
+  const voted = d.voters.filter(x => x.voted).length;
+  document.getElementById("aTotal").textContent = total;
+  document.getElementById("aVoted").textContent = voted;
+  document.getElementById("aRemain").textContent = total-voted;
+  document.getElementById("aRate").textContent = total ? Math.round(voted/total*100)+"%" : "0%";
+  document.getElementById("electionStatus").textContent = d.status;
+  const results = document.getElementById("adminResults");
+  results.innerHTML = "";
+  d.candidates.forEach(c => {
+    const n = Number(d.votes[c.id] || 0), p = voted ? Math.round(n/voted*100) : 0;
+    results.innerHTML += `<div class="result"><div class="rh"><span>${esc(c.id)} — ${esc(c.name)}</span><span>${n} suara (${p}%)</span></div><div class="bar"><i style="width:${p}%"></i></div></div>`;
+  });
+  const voterTable = document.getElementById("voterTable");
+  voterTable.innerHTML = d.voters.map(x => `<tr><td>${esc(x.id)}</td><td>${esc(x.name)}</td><td><span class="pill ${x.voted?'ok':'no'}">${x.voted?'SUDAH MEMILIH':'BELUM MEMILIH'}</span></td></tr>`).join("") || '<tr><td colspan="3">Belum ada data.</td></tr>';
+  const candidateTable = document.getElementById("candidateTable");
+  candidateTable.innerHTML = d.candidates.map(c => `<tr><td>${c.photo ? `<img class="candidate-photo-thumb" src="${esc(c.photo)}" alt="Foto">` : `<div class="candidate-photo-thumb" style="display:grid;place-items:center;color:#1769aa;font-weight:800">${esc(c.id)}</div>`}</td><td>${esc(c.id)}</td><td>${esc(c.name)}</td><td>${esc(c.role)}</td><td><div class="tools"><button class="secondary" onclick="openCandidateModal('${esc(c.id)}')">Edit</button><button class="danger" onclick="delCandidate('${esc(c.id)}')">Hapus</button></div></td></tr>`).join("");
+}
+async function seedDemo() {
+  if (!confirm("Reset status semua P001-P999 menjadi BELUM MEMILIH dan hapus rekap suara?")) return;
+  d.voters = d.voters.map(v => ({...v, voted:false}));
+  d.votes = {};
+  await save();
+  toast("Status P001-P999 sudah direset.");
+}
+function addVoter() {
+  const id = prompt("ID pemilih:");
+  if (!id) return;
+  const cleanId = id.trim().toUpperCase();
+  const name = prompt("Nama pemilih:");
+  if (!name) return;
+  if (d.voters.some(x => x.id === cleanId)) return toast("ID sudah ada");
+  d.voters.push({id:cleanId, name:name.trim(), voted:false});
+  save();
+}
+function openCandidateModal(id=null) {
+  candidateEditId = id;
+  const candidate = id ? d.candidates.find(x => x.id === id) : null;
+  document.getElementById("candidateModalTitle").textContent = candidate ? "Edit Kandidat" : "Tambah Kandidat";
+  document.getElementById("candidateName").value = candidate ? candidate.name : "";
+  document.getElementById("candidateRole").value = candidate ? candidate.role : "Calon Ketua DPC";
+  document.getElementById("candidatePhotoFile").value = "";
+  candidatePhotoDraft = candidate?.photo || "";
+  renderCandidatePhotoPreview();
+  document.getElementById("candidateModal").classList.add("show");
+}
+function closeCandidateModal() {
+  document.getElementById("candidateModal").classList.remove("show");
+  candidateEditId = null;
+  candidatePhotoDraft = "";
+}
+function renderCandidatePhotoPreview() {
+  const box = document.getElementById("candidatePhotoPreview");
+  box.innerHTML = candidatePhotoDraft ? `<img src="${candidatePhotoDraft}" alt="Preview foto kandidat">` : "FOTO";
+}
+function clearCandidatePhoto() {
+  candidatePhotoDraft = "";
+  document.getElementById("candidatePhotoFile").value = "";
+  renderCandidatePhotoPreview();
+}
+function handleCandidatePhoto(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith("image/")) { toast("File harus berupa gambar"); event.target.value=""; return; }
+  if (file.size > 12*1024*1024) { toast("Ukuran foto maksimal 12 MB"); event.target.value=""; return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    const img = new Image();
+    img.onload = () => {
+      const max = 900;
+      const scale = Math.min(1, max/Math.max(img.width,img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.max(1,Math.round(img.width*scale));
+      canvas.height = Math.max(1,Math.round(img.height*scale));
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      candidatePhotoDraft = canvas.toDataURL("image/jpeg",0.78);
+      renderCandidatePhotoPreview();
+    };
+    img.onerror = () => toast("Foto tidak dapat dibaca");
+    img.src = reader.result;
+  };
+  reader.onerror = () => toast("Gagal membaca file foto");
+  reader.readAsDataURL(file);
+}
+async function saveCandidate() {
+  const name = document.getElementById("candidateName").value.trim();
+  const role = document.getElementById("candidateRole").value.trim() || "Calon Ketua DPC";
+  if (!name) return toast("Nama kandidat wajib diisi");
+  if (candidateEditId) {
+    const candidate = d.candidates.find(x => x.id === candidateEditId);
+    if (!candidate) return;
+    candidate.name = name;
+    candidate.role = role;
+    if (candidatePhotoDraft) candidate.photo = candidatePhotoDraft;
+    else delete candidate.photo;
+  } else {
+    const maxId = d.candidates.reduce((m,c) => Math.max(m,parseInt(c.id,10)||0),0);
+    const id = String(maxId+1).padStart(2,"0");
+    d.candidates.push({id,name,role,photo:candidatePhotoDraft||""});
+  }
+  const ok = await save();
+  if (ok) { closeCandidateModal(); toast("Kandidat tersimpan dan tersinkron ke Firebase."); }
+}
+async function delCandidate(id) {
+  if (!confirm("Hapus kandidat ini?")) return;
+  d.candidates = d.candidates.filter(x => x.id !== id);
+  delete d.votes[id];
+  await save();
+}
+async function toggleElection() {
+  d.status = d.status === "BERLANGSUNG" ? "DITUTUP" : "BERLANGSUNG";
+  await save();
+  toast("Status: " + d.status);
+}
+async function resetData() {
+  if (!confirm("Reset data pemilihan di Firebase? Tindakan ini menghapus perubahan yang ada.")) return;
+  d = freshData();
+  await save();
+}
+function exportData() {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(d,null,2)],{type:"application/json"}));
+  a.download = "e-voting-patelki-data.json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+document.querySelectorAll("[data-admin]").forEach(button => {
+  button.onclick = () => {
+    document.querySelectorAll(".adminview").forEach(view => view.classList.add("hidden"));
+    document.getElementById(button.dataset.admin).classList.remove("hidden");
+    document.querySelectorAll("[data-admin]").forEach(nav => nav.classList.remove("active"));
+    button.classList.add("active");
+  };
+});
+function toast(message) {
+  const t = document.getElementById("toast");
+  t.textContent = message;
+  t.style.display = "block";
+  clearTimeout(window.tt);
+  window.tt = setTimeout(() => t.style.display="none",3200);
+}
+function esc(value) {
+  return String(value).replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+}
+
+// Fungsi yang dipanggil oleh atribut onclick/onchange HTML.
+Object.assign(window, {
+  showLogin, voterLogin, enterVoterTestMode, renderVoter, confirmVote, closeModal,
+  submitVote, voterLogout, adminLogin, adminLogout, renderAdmin, seedDemo, addVoter,
+  openCandidateModal, closeCandidateModal, renderCandidatePhotoPreview,
+  clearCandidatePhoto, handleCandidatePhoto, saveCandidate, delCandidate,
+  toggleElection, resetData, exportData, toast
+});
+
+renderAdmin();
+</script>
+</body>
+</html>
